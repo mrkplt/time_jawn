@@ -20,7 +20,6 @@ module TimeJawn
   end
 
   module InstanceMethods
-    
     def self.included(base)
       base.datetime_attributes.each do |attribute|
         define_method("#{attribute}_local_time") { to_local(send(attribute.to_sym)) }

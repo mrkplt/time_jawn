@@ -23,9 +23,41 @@ describe Happening do
       end
     end
   end
-  context 'instance methods' do
+  context 'static instance methods' do
     before{
       @happening = Happening.find.last
     }
+    describe "self.included(base)" do
+      pending "How do you test this? I suppose if the dynamic tests exist this worked. Seems shoddy."
+    end
+
+    describe "current_time" do
+      pending "Test Incoming"
+    end
+
+    describe "to_local(time)" do
+      pending "Test Incoming"
+    end
+
+    describe "add_zone(time)" do
+      pending "Test Incoming"
+    end
+
+    describe "change_zone(time)" do
+      pending "Test Incoming"
+    end
+  end
+  context 'dynamic instance methods' do
+    describe "created_at_local_time" do
+      pending "Test Incoming"
+    end
+
+    describe "updated_at_local_time" do
+      pending "Test Incoming"
+    end
+
+    describe "start_time_local_time" do
+      pending "Test Incoming"
+    end
   end
 end
