@@ -13,7 +13,7 @@ module TimeJawn
 
       datetime_attributes = []
       klass.columns_hash.each do |column|
-         datetime_attributes << (column[0]) if column[1].type == :datetime
+         datetime_attributes << (column[0]).to_sym if column[1].type == :datetime
       end
       return datetime_attributes
     end
@@ -22,7 +22,7 @@ module TimeJawn
   module InstanceMethods
     def self.included(base)
       base.datetime_attributes.each do |attribute|
-        define_method("#{attribute}_local_time") { to_local(send(attribute.to_sym)) }
+        define_method("local_" + attribute.to_s) { to_local(send(attribute)) }
       end
     end
 
@@ -34,14 +34,13 @@ module TimeJawn
       time.in_time_zone(self.time_zone)
     end
   
-    def add_zone(time)
+    def add_zone(time_string)
       Time.zone = self.time_zone
-      Time.zone.parse(time)
+      Time.zone.parse(time_string)
     end
 
     def change_zone(time)
-      Time.zone = self.time_zone
-      Time.zone.parse(time.to_s)
+      add_zone(time.to_s)
     end
   end
 end
