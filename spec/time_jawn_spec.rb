@@ -35,7 +35,11 @@ describe Happening do
     end
 
     describe "current_time" do
-      it "returns a time with zone object reflecting the current local time of the instance"
+      it "returns a time with zone object reflecting the current local time of the instance" do
+        Timecop.freeze
+        expect(DateTime.current).to eq @happening1.current_time
+        Timecop.return
+      end
     end
 
     describe "to_local(time)" do
@@ -48,17 +52,26 @@ describe Happening do
 
     describe "add_zone(time_string)" do
       it "returns a time with zone object that reflects the time value passed in time_string with time zone information of instance appended" do
-
         expect(@happening1.add_zone("2013-08-19 12:34:56")).to eq 'Mon, 19 Aug 2013 12:34:56 EDT -04:00'
         expect(@happening2.add_zone("2013-08-19 12:34:56")).to eq 'Mon, 19 Aug 2013 12:34:56 HST -10:00'
         expect(@happening1.add_zone("2013-11-11 12:34:56")).to eq 'Mon, 11 Nov 2013 12:34:56 EST -05:00'
         expect(@happening2.add_zone("2013-11-11 12:34:56")).to eq 'Mon, 11 Nov 2013 12:34:56 HST -10:00'
-     
       end
     end
 
     describe "change_zone(time)" do
-      it "returns a time with zone object that has had only it's time zone switched to local time of instance"
+      it "returns a time with zone object that has had only it's time zone switched to local time of instance" do
+        Time.zone = 'Rangoon'
+        time = Time.zone.parse("Wed, 28 Aug 2015 15:16:16")
+        expect(time.to_s.split(' ')[2]).to eq ('+0630')
+        expect(time.to_s.split(' ')[2]).to_not eq ('-0400')
+        expect(@happening1.change_zone(time)).to_not eq time
+        expect(@happening1.change_zone(time).to_s.split(' ')[0]).to eq time.to_s.split(' ')[0]
+        expect(@happening1.change_zone(time).to_s.split(' ')[1]).to eq time.to_s.split(' ')[1]
+        expect(@happening1.change_zone(time).to_s.split(' ')[2]).to_not eq time.to_s.split(' ')[2]
+        expect(@happening1.change_zone(time).to_s.split(' ')[2]).to_not eq ('+0630')
+        expect(@happening1.change_zone(time).to_s.split(' ')[2]).to eq ('-0400')
+      end
     end
   end
   context 'dynamic instance methods' do

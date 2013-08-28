@@ -1,4 +1,5 @@
 require 'active_record'
+require 'timecop'
 require 'time_jawn'
 
 Time.zone = 'UTC'
@@ -10,5 +11,3 @@ ActiveRecord::Base.establish_connection(:adapter => "sqlite3",
 load File.dirname(__FILE__) + '/support/schema.rb'
 load File.dirname(__FILE__) + '/support/models.rb'
 load File.dirname(__FILE__) + '/support/data.rb'
-
-puts Happening.last.to_yaml

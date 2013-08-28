@@ -40,7 +40,7 @@ module TimeJawn
     end
 
     def change_zone(time)
-      add_zone(time.to_s)
+      add_zone(time.to_s.split('+')[0])
     end
   end
 end
