@@ -1,0 +1,2 @@
+/spec/*.sqlite3
+/spec/test.sqlite3*
