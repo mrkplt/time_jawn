@@ -17,6 +17,9 @@ describe Happening do
         expect(Happening.instance_methods.include? :local_start_time).to eq false
         expect(Happening.instance_methods.include? :local_created_at).to eq false
         expect(Happening.instance_methods.include? :local_updated_at).to eq false
+        expect(Happening.instance_methods.include? :local_start_time=).to eq false
+        expect(Happening.instance_methods.include? :local_updated_at=).to eq false
+        expect(Happening.instance_methods.include? :local_updated_at=).to eq false
       end
       it "has instance methods once called " do
         
@@ -25,6 +28,9 @@ describe Happening do
         expect(Happening.instance_methods.include? :local_start_time).to eq true
         expect(Happening.instance_methods.include? :local_created_at).to eq true
         expect(Happening.instance_methods.include? :local_updated_at).to eq true
+        expect(Happening.instance_methods.include? :local_start_time=).to eq true
+        expect(Happening.instance_methods.include? :local_created_at=).to eq true
+        expect(Happening.instance_methods.include? :local_updated_at=).to eq true
       end
     end
   end
@@ -114,6 +120,72 @@ describe Happening do
         expect(@happening2.created_at).to eq 'Wed, 31 Dec 2012 14:00:00 HST -10:00'
         Time.zone = 'Pacific/Honolulu'
         expect(@happening2.local_created_at.to_s).to eq "2012-12-31 14:00:00 -1000"
+      end
+    end
+
+    describe "local_start_time=(time_or_string)" do
+      it "sets start_time on the instance to a time_with_zone object only modifying the time zone" do
+        expect(@happening1.start_time).to eq 'Mon, 01 Apr 2013 00:01:00 UTC +00:00'
+        
+        @happening1.local_start_time = Time.parse("Thu, 29 Aug 2013 02:40:12 HST -10:00")
+        expect(@happening1.start_time).to eq Time.parse("2013-08-29 02:40:12 -0400")
+
+        @happening1.local_start_time = Time.parse("Thu, 29 Aug 2013 02:41:12")
+        expect(@happening1.start_time).to eq Time.parse("2013-08-29 02:41:12 -0400")
+
+        @happening1.local_start_time = "Thu, 29 Aug 2013 02:42:12"
+        expect(@happening1.start_time).to eq Time.parse("2013-08-29 02:42:12 -0400")
+
+        @happening1.local_start_time = "Thu, 29 Aug 2013 02:43:12 HST -10:00"
+        expect(@happening1.start_time).to eq Time.parse("2013-08-29 02:43:12 -0400")
+
+        @happening1.local_start_time = "2013-11-11 12:34:56"
+        expect(@happening1.start_time).to eq Time.parse("2013-11-11 12:34:56 -0500")
+
+      end
+    end
+
+    describe "local_updated_at=(time_or_string)" do
+      it "sets updated_at on the instance to a time_with_zone object only modifying the time zone" do
+        expect(@happening1.updated_at).to eq 'Tue, 01 Jan 2013 00:01:00 +0000'
+        
+        @happening1.local_updated_at = Time.parse("Thu, 29 Aug 2013 02:40:12 HST -10:00")
+        expect(@happening1.updated_at).to eq Time.parse("2013-08-29 02:40:12 -0400")
+
+        @happening1.local_updated_at = Time.parse("Thu, 29 Aug 2013 02:41:12")
+        expect(@happening1.updated_at).to eq Time.parse("2013-08-29 02:41:12 -0400")
+
+        @happening1.local_updated_at = "Thu, 29 Aug 2013 02:42:12"
+        expect(@happening1.updated_at).to eq Time.parse("2013-08-29 02:42:12 -0400")
+
+        @happening1.local_updated_at = "Thu, 29 Aug 2013 02:43:12 HST -10:00"
+        expect(@happening1.updated_at).to eq Time.parse("2013-08-29 02:43:12 -0400")
+
+        @happening1.local_updated_at = "2013-11-11 12:34:56"
+        expect(@happening1.updated_at).to eq Time.parse("2013-11-11 12:34:56 -0500")
+
+      end
+    end
+
+    describe "local_created_at=(time_or_string)" do
+      it "sets created_at on the instance to a time_with_zone object only modifying the time zone" do
+        expect(@happening1.created_at).to eq ' Tue, 01 Jan 2013 00:01:00 +0000'
+        
+        @happening1.local_created_at = Time.parse("Thu, 29 Aug 2013 02:40:12 HST -10:00")
+        expect(@happening1.created_at).to eq Time.parse("2013-08-29 02:40:12 -0400")
+
+        @happening1.local_created_at = Time.parse("Thu, 29 Aug 2013 02:41:12")
+        expect(@happening1.created_at).to eq Time.parse("2013-08-29 02:41:12 -0400")
+
+        @happening1.local_created_at = "Thu, 29 Aug 2013 02:42:12"
+        expect(@happening1.created_at).to eq Time.parse("2013-08-29 02:42:12 -0400")
+
+        @happening1.local_created_at = "Thu, 29 Aug 2013 02:43:12 HST -10:00"
+        expect(@happening1.created_at).to eq Time.parse("2013-08-29 02:43:12 -0400")
+
+        @happening1.local_created_at = "2013-11-11 12:34:56"
+        expect(@happening1.created_at).to eq Time.parse("2013-11-11 12:34:56 -0500")
+
       end
     end
   end

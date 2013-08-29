@@ -24,6 +24,15 @@ module TimeJawn
       base.datetime_attributes.each do |attribute|
         define_method("local_" + attribute.to_s) { to_local(send(attribute)) }
       end
+      base.datetime_attributes.each do |attribute|
+        define_method("local_" + attribute.to_s + '=') do |time_or_string_value|
+          if time_or_string_value.class.name == 'String'
+            write_attribute(attribute, add_zone(time_or_string_value))
+          else
+            write_attribute(attribute, change_zone(time_or_string_value))
+          end
+        end
+      end
     end
 
     def current_time
@@ -40,7 +49,7 @@ module TimeJawn
     end
 
     def change_zone(time)
-      add_zone(time.to_s.split('+')[0])
+      add_zone(time.strftime('%a, %d %b %Y %H:%M:%S'))
     end
   end
 end
