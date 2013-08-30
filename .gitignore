@@ -1,2 +1,4 @@
 /spec/*.sqlite3
-/spec/test.sqlite3*
+/doc
+/doc/*
+*.gem
