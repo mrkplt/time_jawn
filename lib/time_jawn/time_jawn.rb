@@ -12,8 +12,8 @@ module TimeJawn
       klass = self.name.constantize
 
       datetime_attributes = []
-      klass.columns_hash.each do |column|
-         datetime_attributes << (column[0]).to_sym if column[1].type == :datetime
+      klass.columns.each do |column|
+         datetime_attributes << column.name.to_sym if column.type == :datetime
       end
       return datetime_attributes
     end
@@ -22,10 +22,8 @@ module TimeJawn
   module InstanceMethods
     def self.included(base)
       base.datetime_attributes.each do |attribute|
-        define_method("local_" + attribute.to_s) { to_local(send(attribute)) }
-      end
-      base.datetime_attributes.each do |attribute|
-        define_method("local_" + attribute.to_s + '=') do |time_or_string_value|
+        define_method(:"local_#{attribute}") { to_local(send(attribute)) }
+        define_method(:"local_#{attribute}=") do |time_or_string_value|
           if time_or_string_value.class.name == 'String'
             write_attribute(attribute, add_zone(time_or_string_value))
           else
