@@ -75,7 +75,7 @@ module TimeJawn
     def current_time
       to_local(DateTime.current)
     end
-    # converts a time object into it's local counter part (they will have the same value but differnet presentation.)
+    # converts a time object into it's local counter part (they will have the same value but differnt presentation.)
     def to_local(time)
       time.in_time_zone(self.time_zone)
     end

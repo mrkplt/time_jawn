@@ -3,3 +3,4 @@
 
 Happening.create!(start_time: DateTime.new+6725.years+3.months+1.minute, time_zone: 'Eastern Time (US & Canada)', name:'Eastern Time (US & Canada)', updated_at: DateTime.new+6725.years+1.minute, created_at: DateTime.new+6725.years+1.minute)
 Happening.create!(start_time: DateTime.new+6725.years+3.months, time_zone: 'Pacific/Honolulu', name:'Pacific/Honolulu', updated_at: DateTime.new+6725.years, created_at: DateTime.new+6725.years)
+
