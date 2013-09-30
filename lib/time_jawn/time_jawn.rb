@@ -16,7 +16,7 @@ module TimeJawn
       send :include, InstanceMethods
     end
     # Locates all of an ActiveRecord class' DateTime Attributes and returns them as an array of symbols.
-    def datetime_attributes
+    def _datetime_attributes
       klass = self.name.constantize
 
       datetime_attributes = []
@@ -60,36 +60,36 @@ module TimeJawn
     #
     # You can see examples of how these methods work in the specs folder.
     def self.included(base)
-      base.datetime_attributes.each do |attribute|
-        define_method(:"local_#{attribute}") { to_local(send(attribute)) }
+      base._datetime_attributes.each do |attribute|
+        define_method(:"local_#{attribute}") { _to_local(send(attribute)) }
         define_method(:"local_#{attribute}=") do |time_or_string_value|
-          if time_or_string_value.class.name == 'String'
-            write_attribute(attribute, add_zone(time_or_string_value))
+          if time_or_string_value.is_a? String
+            write_attribute(attribute, _add_zone(time_or_string_value))
           else
-            write_attribute(attribute, change_zone(time_or_string_value))
+            write_attribute(attribute, _change_zone(time_or_string_value))
           end
         end
       end
     end
     # Returns the current time according to the instance.
     def current_time
-      to_local(DateTime.current)
+      _to_local(DateTime.current)
     end
     # converts a time object into it's local counter part (they will have the same value but differnt presentation.)
-    def to_local(time)
+    def _to_local(time)
       time.in_time_zone(self.time_zone)
     end
     
     # Given a string that looks like a time. It will convert that string into a time object that matches the time but with
     # the instances time zone appended.
-    def add_zone(time_string)
+    def _add_zone(time_string)
       Time.zone = self.time_zone
       Time.zone.parse(time_string)
     end
 
     # Returns a string representation of a time object suitable for consumption by add_zone.
-    def change_zone(time)
-      add_zone(time.strftime('%a, %d %b %Y %H:%M:%S'))
+    def _change_zone(time)
+      _add_zone(time.strftime('%a, %d %b %Y %H:%M:%S'))
     end
   end
 end

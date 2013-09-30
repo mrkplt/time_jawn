@@ -9,7 +9,7 @@ describe Happening do
   context 'class method' do
     describe "datetime_attributes" do
       it "returns an array of all datetime objects for the class" do
-        expect(Happening.datetime_attributes).to eq [:start_time, :created_at, :updated_at] 
+        expect(Happening._datetime_attributes).to eq [:start_time, :created_at, :updated_at] 
       end
     end
     describe "has_time_zone" do
@@ -48,35 +48,35 @@ describe Happening do
       end
     end
 
-    describe "to_local(time)" do
+    describe "_to_local(time)" do
       it "returns a time with zone that has been coverted to reflect the local time" do
         expect(@happening1.start_time).to eq 'Mon, 01 Apr 2013 00:01:00 UTC +00:00'
-        expect(@happening1.to_local(@happening1.start_time)).to eq 'Sun, 31 Mar 2013 20:01:00 EDT -04:00'
-        expect(@happening1.to_local(@happening1.start_time).to_s).to eq "2013-03-31 20:01:00 -0400"
+        expect(@happening1._to_local(@happening1.start_time)).to eq 'Sun, 31 Mar 2013 20:01:00 EDT -04:00'
+        expect(@happening1._to_local(@happening1.start_time).to_s).to eq "2013-03-31 20:01:00 -0400"
       end
     end
 
-    describe "add_zone(time_string)" do
+    describe "_add_zone(time_string)" do
       it "returns a time with zone object that reflects the time value passed in time_string with time zone information of instance appended" do
-        expect(@happening1.add_zone("2013-08-19 12:34:56")).to eq 'Mon, 19 Aug 2013 12:34:56 EDT -04:00'
-        expect(@happening2.add_zone("2013-08-19 12:34:56")).to eq 'Mon, 19 Aug 2013 12:34:56 HST -10:00'
-        expect(@happening1.add_zone("2013-11-11 12:34:56")).to eq 'Mon, 11 Nov 2013 12:34:56 EST -05:00'
-        expect(@happening2.add_zone("2013-11-11 12:34:56")).to eq 'Mon, 11 Nov 2013 12:34:56 HST -10:00'
+        expect(@happening1._add_zone("2013-08-19 12:34:56")).to eq 'Mon, 19 Aug 2013 12:34:56 EDT -04:00'
+        expect(@happening2._add_zone("2013-08-19 12:34:56")).to eq 'Mon, 19 Aug 2013 12:34:56 HST -10:00'
+        expect(@happening1._add_zone("2013-11-11 12:34:56")).to eq 'Mon, 11 Nov 2013 12:34:56 EST -05:00'
+        expect(@happening2._add_zone("2013-11-11 12:34:56")).to eq 'Mon, 11 Nov 2013 12:34:56 HST -10:00'
       end
     end
 
-    describe "change_zone(time)" do
+    describe "_change_zone(time)" do
       it "returns a time with zone object that has had only it's time zone switched to local time of instance" do
         Time.zone = 'Rangoon'
         time = Time.zone.parse("Wed, 28 Aug 2015 15:16:16")
         expect(time.to_s.split(' ')[2]).to eq ('+0630')
         expect(time.to_s.split(' ')[2]).to_not eq ('-0400')
-        expect(@happening1.change_zone(time)).to_not eq time
-        expect(@happening1.change_zone(time).to_s.split(' ')[0]).to eq time.to_s.split(' ')[0]
-        expect(@happening1.change_zone(time).to_s.split(' ')[1]).to eq time.to_s.split(' ')[1]
-        expect(@happening1.change_zone(time).to_s.split(' ')[2]).to_not eq time.to_s.split(' ')[2]
-        expect(@happening1.change_zone(time).to_s.split(' ')[2]).to_not eq ('+0630')
-        expect(@happening1.change_zone(time).to_s.split(' ')[2]).to eq ('-0400')
+        expect(@happening1._change_zone(time)).to_not eq time
+        expect(@happening1._change_zone(time).to_s.split(' ')[0]).to eq time.to_s.split(' ')[0]
+        expect(@happening1._change_zone(time).to_s.split(' ')[1]).to eq time.to_s.split(' ')[1]
+        expect(@happening1._change_zone(time).to_s.split(' ')[2]).to_not eq time.to_s.split(' ')[2]
+        expect(@happening1._change_zone(time).to_s.split(' ')[2]).to_not eq ('+0630')
+        expect(@happening1._change_zone(time).to_s.split(' ')[2]).to eq ('-0400')
       end
     end
   end
