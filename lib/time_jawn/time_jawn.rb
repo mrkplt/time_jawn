@@ -5,8 +5,45 @@ module TimeJawn
   def self.included(base)
     base.send :extend, ClassMethods
   end
+  
+
+  # Defines private methods necessary for TimeJawn to work. 
+  module TimeJawnPrivateClassMethods
+    # Locates all of an ActiveRecord class' DateTime Attributes and returns them as an array of symbols.
+    def _datetime_attributes
+      ActiveSupport::Deprecation.warn "_datetime_attributes will be made private in a future version."
+      klass = name.constantize
+
+      datetime_attributes = []
+      klass.columns.each do |column|
+         datetime_attributes << column.name.to_sym if column.type == :datetime
+      end
+      return datetime_attributes
+    end
+
+    private
+
+    # generates an instance method called "local_#{attribute}" that calls the _to_local instance method.
+    def _generate_to_local(attribute)
+      define_method(:"local_#{attribute}") { _to_local(send(attribute)) }
+    end
+
+    # generates an instance method called "local_#{attribute}=" that calls either the _add_zone or _change_zone
+    # instance methods depending on teh class of the input.
+    def _generate_to_local_with_assignment(attribute)
+      define_method(:"local_#{attribute}=") do |time_or_string_value|
+        if time_or_string_value.is_a? String
+          write_attribute(attribute, _add_zone(time_or_string_value))
+        else
+          write_attribute(attribute, _change_zone(time_or_string_value))
+        end
+      end
+    end
+  end
+  
   # Defines methods that will attached to all ActiveRecord classes.
   module ClassMethods
+    include TimeJawnPrivateClassMethods
     # When called it loads the methods located in InstanceMethods.
     # It is typically included in a model's rb file so that instances of that class gain the InstanceMethods at each instantiation.
     #     class Event<ActiveRecord::Base
@@ -15,20 +52,14 @@ module TimeJawn
     def has_time_zone
       send :include, InstanceMethods
     end
-    # Locates all of an ActiveRecord class' DateTime Attributes and returns them as an array of symbols.
-    def _datetime_attributes
-      klass = self.name.constantize
-
-      datetime_attributes = []
-      klass.columns.each do |column|
-         datetime_attributes << column.name.to_sym if column.type == :datetime
-      end
-      return datetime_attributes
-    end
   end
+
+  
+  
   #Defines methods that will be added to instances of classes that have previously called has_time_zone.
   module InstanceMethods
-    # This method generates a series of methods on instances. The methods that are created are called
+    # This method generates a series of methods on instances by calling the _generate_to_local and
+    #  _generate_to_local_with_assignment that are private on teh parent class. The methods that are created are called
     # local_#{attribue} and local_#{attribute}= the attribute portion their names are completed by enumerating
     # the datetime_attributes of the class. Twice as many methods as there are DateTime attributes will 
     # be created.
@@ -60,15 +91,9 @@ module TimeJawn
     #
     # You can see examples of how these methods work in the specs folder.
     def self.included(base)
-      base._datetime_attributes.each do |attribute|
-        define_method(:"local_#{attribute}") { _to_local(send(attribute)) }
-        define_method(:"local_#{attribute}=") do |time_or_string_value|
-          if time_or_string_value.is_a? String
-            write_attribute(attribute, _add_zone(time_or_string_value))
-          else
-            write_attribute(attribute, _change_zone(time_or_string_value))
-          end
-        end
+      (base.send :_datetime_attributes).each do |attribute|
+        base.send(:_generate_to_local, attribute)
+        base.send(:_generate_to_local_with_assignment, attribute)
       end
     end
     # Returns the current time according to the instance.
@@ -77,18 +102,21 @@ module TimeJawn
     end
     # converts a time object into it's local counter part (they will have the same value but differnt presentation.)
     def _to_local(time)
+      ActiveSupport::Deprecation.warn "_to_local will be made private in a future version."
       time.in_time_zone(self.time_zone)
     end
     
     # Given a string that looks like a time. It will convert that string into a time object that matches the time but with
     # the instances time zone appended.
     def _add_zone(time_string)
+      ActiveSupport::Deprecation.warn "_add_zone will be made private in a future version."
       Time.zone = self.time_zone
       Time.zone.parse(time_string)
     end
 
     # Returns a string representation of a time object suitable for consumption by add_zone.
     def _change_zone(time)
+      ActiveSupport::Deprecation.warn "_change_zone will be made private in a future version."
       _add_zone(time.strftime('%a, %d %b %Y %H:%M:%S'))
     end
   end

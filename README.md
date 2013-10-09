@@ -1,5 +1,7 @@
 TimeJawn
 ========
+[![Code Climate](https://codeclimate.com/github/Tamman/time_jawn.png)](https://codeclimate.com/github/Tamman/time_jawn)
+
 
 TimeJawn makes class instances time zone aware. It doesn't care one iota about system, application or database time.
 
