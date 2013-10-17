@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = %q{time_jawn}
-  s.version = "1.0.1"
-  s.date = %q{2013-09-30}
+  s.version = "1.1.1"
+  s.date = %q{2013-10-16}
   s.authors = ['Mark Platt']
   s.email = 'mplatt@tammantech.com'
   s.description = %q{TimeJawn makes class instances time zone aware. It doesn't care one iota about system, application or database time as far as I can tell. It has some expectations and adds some useful methods.} 

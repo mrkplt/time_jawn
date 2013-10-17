@@ -44,12 +44,18 @@ module TimeJawn
   # Defines methods that will attached to all ActiveRecord classes.
   module ClassMethods
     include TimeJawnPrivateClassMethods
+    attr_reader :time_zone_attribute_name
     # When called it loads the methods located in InstanceMethods.
     # It is typically included in a model's rb file so that instances of that class gain the InstanceMethods at each instantiation.
     #     class Event<ActiveRecord::Base
     #       has_time_zone
     #     end 
-    def has_time_zone
+    # Optionally you may pass the name of your time zone attribute in as a symbol.
+    #     class Event<ActiveRecord::Base
+    #       has_time_zone    :this_is_my_time_zone
+    #     end 
+    def has_time_zone(time_zone_attribute_name=:time_zone)
+      @time_zone_attribute_name = time_zone_attribute_name
       send :include, InstanceMethods
     end
   end
@@ -103,14 +109,14 @@ module TimeJawn
     # converts a time object into it's local counter part (they will have the same value but differnt presentation.)
     def _to_local(time)
       ActiveSupport::Deprecation.warn "_to_local will be made private in a future version."
-      time.in_time_zone(self.time_zone)
+      time.in_time_zone(self.send(self.class.time_zone_attribute_name))
     end
     
     # Given a string that looks like a time. It will convert that string into a time object that matches the time but with
     # the instances time zone appended.
     def _add_zone(time_string)
       ActiveSupport::Deprecation.warn "_add_zone will be made private in a future version."
-      Time.zone = self.time_zone
+      Time.zone = self.send(self.class.time_zone_attribute_name)
       Time.zone.parse(time_string)
     end
 

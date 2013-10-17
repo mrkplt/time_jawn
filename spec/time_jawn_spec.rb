@@ -190,3 +190,23 @@ describe Happening do
     end
   end
 end
+
+describe Event do
+  before do
+    @event1 = Event.find_by_name('Eastern Time (US & Canada)')
+  end
+  context "Event should have time_jawn methods even though it has a non_conventional attribute" do
+    subject { @event1 }
+
+    it { should respond_to :local_start_time }
+    it { should respond_to :local_created_at }
+    it { should respond_to :local_updated_at }
+    it { should respond_to :local_start_time= }
+    it { should respond_to :local_created_at= }
+    it { should respond_to :local_updated_at= }
+    it { should respond_to :current_time }
+    it { should respond_to :_to_local }
+    it { should respond_to :_add_zone }
+    it { should respond_to :_change_zone }
+  end
+end
