@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{time_jawn}
-  s.version = "1.1.1"
+  s.version = "1.2.0"
   s.date = %q{2013-10-16}
   s.authors = ['Mark Platt']
   s.email = 'mplatt@tammantech.com'
@@ -11,7 +11,8 @@ Gem::Specification.new do |s|
   s.test_files = 'spec/time_jawn_spec.rb'
   s.files = [
     "lib/time_jawn.rb",
-    "lib/time_jawn/time_jawn.rb"
+    "lib/time_jawn/time_jawn.rb",
+    "lib/time_jawn/time_jawn_private_class_methods.rb"
   ]
   s.homepage    = 'http://tammantech.com'
   s.require_paths = ["lib"]
