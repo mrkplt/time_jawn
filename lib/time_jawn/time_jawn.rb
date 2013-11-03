@@ -1,44 +1,10 @@
 # The base module of the TimeJawn gem. Everything in here assumes that your model has a valid time zone
 # in a attribute name time_zone or has been delegating one to somewhere else.
 module TimeJawn
+  require 'time_jawn/time_jawn_private_class_methods'
   # Automatically runs and adds ClassMethods to ActiveRecord::Base
   def self.included(base)
     base.send :extend, ClassMethods
-  end
-  
-
-  # Defines private methods necessary for TimeJawn to work. 
-  module TimeJawnPrivateClassMethods
-    # Locates all of an ActiveRecord class' DateTime Attributes and returns them as an array of symbols.
-    def _datetime_attributes
-      ActiveSupport::Deprecation.warn "_datetime_attributes will be made private in a future version."
-      klass = name.constantize
-
-      datetime_attributes = []
-      klass.columns.each do |column|
-         datetime_attributes << column.name.to_sym if column.type == :datetime
-      end
-      return datetime_attributes
-    end
-
-    private
-
-    # generates an instance method called "local_#{attribute}" that calls the _to_local instance method.
-    def _generate_to_local(attribute)
-      define_method(:"local_#{attribute}") { _to_local(send(attribute)) }
-    end
-
-    # generates an instance method called "local_#{attribute}=" that calls either the _add_zone or _change_zone
-    # instance methods depending on teh class of the input.
-    def _generate_to_local_with_assignment(attribute)
-      define_method(:"local_#{attribute}=") do |time_or_string_value|
-        if time_or_string_value.is_a? String
-          write_attribute(attribute, _add_zone(time_or_string_value))
-        else
-          write_attribute(attribute, _change_zone(time_or_string_value))
-        end
-      end
-    end
   end
   
   # Defines methods that will attached to all ActiveRecord classes.
@@ -54,14 +20,12 @@ module TimeJawn
     #     class Event<ActiveRecord::Base
     #       has_time_zone    :this_is_my_time_zone
     #     end 
-    def has_time_zone(time_zone_attribute_name=:time_zone)
-      @time_zone_attribute_name = time_zone_attribute_name
+    def has_time_zone(time_zone_attribute_name=:time_zone, options_hash={})
+      _set_instance_variables(time_zone_attribute_name, options_hash)
       send :include, InstanceMethods
     end
   end
 
-  
-  
   #Defines methods that will be added to instances of classes that have previously called has_time_zone.
   module InstanceMethods
     # This method generates a series of methods on instances by calling the _generate_to_local and
@@ -97,7 +61,8 @@ module TimeJawn
     #
     # You can see examples of how these methods work in the specs folder.
     def self.included(base)
-      (base.send :_datetime_attributes).each do |attribute|
+      date_time_attributes = base.send(:_class_date_attributes_or_arguments)
+      date_time_attributes.each do |attribute|
         base.send(:_generate_to_local, attribute)
         base.send(:_generate_to_local_with_assignment, attribute)
       end

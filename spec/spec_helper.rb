@@ -3,6 +3,8 @@ require 'timecop'
 require 'time_jawn'
 
 Time.zone = 'UTC'
+# ActiveSupport::Deprecation.silenced = true
+
 ActiveRecord::Base.default_timezone = 'UTC'
 
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", 

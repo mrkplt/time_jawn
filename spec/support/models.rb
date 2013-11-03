@@ -4,3 +4,12 @@ end
 class Event < ActiveRecord::Base
   has_time_zone   :t_z
 end
+
+class Occurrence < ActiveRecord::Base
+  has_time_zone   time_attributes: [:created_at, :start_time]
+end
+
+class Occasion < ActiveRecord::Base
+  has_time_zone   :t_z, 
+                    time_attributes: [:start_time]
+end
