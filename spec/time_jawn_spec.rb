@@ -210,3 +210,61 @@ describe Event do
     it { should respond_to :_change_zone }
   end
 end
+
+describe Occurrence do
+  before do
+    @occurrence1 = Occurrence.find_by_name('Eastern Time (US & Canada)')
+  end
+  
+  context "Ocurrence instance attribute accessor" do
+    describe "time_zone_attribute_name" do
+      it 'should respond with the time_zone attribute name as defined in the class.' do
+        expect( @occurrence1.class.time_zone_attribute_name ).to eq :time_zone
+      end
+    end
+  end
+
+  context "Occurrence should have time_jawn methods, except for local_updated_at, since it is not specified in the model" do
+    subject { @occurrence1 }
+
+    it { should respond_to :local_start_time }
+    it { should respond_to :local_created_at }
+    it { should_not respond_to :local_updated_at }
+    it { should respond_to :local_start_time= }
+    it { should respond_to :local_created_at= }
+    it { should_not respond_to :local_updated_at= }
+    it { should respond_to :current_time }
+    it { should respond_to :_to_local }
+    it { should respond_to :_add_zone }
+    it { should respond_to :_change_zone }
+  end
+end
+
+describe Occasion do
+  before do
+    @occasion1 = Occasion.find_by_name('Eastern Time (US & Canada)')
+  end
+
+  context "Occasion instance attribute accessor" do
+    describe "time_zone_attribute_name" do
+      it 'should respond with the time_zone attribute name as defined in the class.' do
+        expect( @occasion1.class.time_zone_attribute_name ).to eq :t_z
+      end
+    end
+  end
+
+  context "Occasion should have time_jawn methods, except for local_updated_at, since it is not specified in the model, even though it has a non_conventional attribute" do
+    subject { @occasion1 }
+
+    it { should respond_to :local_start_time }
+    it { should_not respond_to :local_created_at }
+    it { should_not respond_to :local_updated_at }
+    it { should respond_to :local_start_time= }
+    it { should_not respond_to :local_created_at= }
+    it { should_not respond_to :local_updated_at= }
+    it { should respond_to :current_time }
+    it { should respond_to :_to_local }
+    it { should respond_to :_add_zone }
+    it { should respond_to :_change_zone }
+  end
+end
