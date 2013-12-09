@@ -82,7 +82,7 @@ module TimeJawn
     def _add_zone(time_string)
       ActiveSupport::Deprecation.warn "_add_zone will be made private in a future version."
       Time.zone = self.send(self.class.time_zone_attribute_name)
-      Time.zone.parse(time_string)
+      Time.zone.parse(Time.parse(time_string).strftime('%a, %d %b %Y %H:%M:%S'))
     end
 
     # Returns a string representation of a time object suitable for consumption by add_zone.
