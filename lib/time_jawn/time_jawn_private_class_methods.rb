@@ -1,4 +1,4 @@
-# Defines private methods necessary for TimeJawn to work. 
+# Defines private methods necessary for TimeJawn to work.
 module TimeJawnPrivateClassMethods
   # Locates all of an ActiveRecord class' DateTime Attributes and returns them as an array of symbols.
   def _datetime_attributes
@@ -9,7 +9,7 @@ module TimeJawnPrivateClassMethods
     klass.columns.each do |column|
        datetime_attributes << column.name.to_sym if column.type == :datetime
     end
-    return datetime_attributes
+    datetime_attributes
   end
 
   private
@@ -56,10 +56,6 @@ module TimeJawnPrivateClassMethods
 
   # returns all of the date_time attributes for a class unless it is specified in the class.
   def _class_date_attributes_or_arguments
-    if @time_jawn_date_time_attributes
-      @time_jawn_date_time_attributes
-    else
-      _datetime_attributes
-    end
+    @time_jawn_date_time_attributes || _datetime_attributes
   end
 end
