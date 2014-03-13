@@ -2,7 +2,7 @@ class Happening < ActiveRecord::Base
 end
 
 class Event < ActiveRecord::Base
-  has_time_zone   :t_z
+  has_time_zone   named: :t_z
 end
 
 class Occurrence < ActiveRecord::Base
@@ -10,6 +10,5 @@ class Occurrence < ActiveRecord::Base
 end
 
 class Occasion < ActiveRecord::Base
-  has_time_zone   :t_z, 
-                    time_attributes: [:start_time]
+  has_time_zone   named: :t_z, time_attributes: [:start_time]
 end

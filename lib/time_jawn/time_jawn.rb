@@ -21,9 +21,10 @@ module TimeJawn
     #     end
     # Optionally you may pass the name of your time zone attribute in as a symbol.
     #     class Event<ActiveRecord::Base
-    #       has_time_zone    :this_is_my_time_zone
-    def has_time_zone(time_zone_attribute_name=:time_zone, options_hash={})
-      _set_instance_variables(time_zone_attribute_name, options_hash)
+    #       has_time_zone   named: :this_is_my_time_zone
+    #     end
+    def has_time_zone(options_hash={})
+      _set_instance_variables(options_hash)
       send :include, InstanceMethods
     end
   end

@@ -13,28 +13,10 @@ module TimeJawnPrivateClassMethods
   end
 
   private
-  
-  def _set_instance_variables(time_zone_attribute_name, options_hash)
-    @time_zone_attribute_name = _evaluate_time_zone_attribute_name(time_zone_attribute_name)
-    @time_jawn_date_time_attributes = _evaluate_time_jawn_date_time_attributes(time_zone_attribute_name, options_hash)
-  end
 
-  def _evaluate_time_zone_attribute_name(time_zone_attribute_name)
-    if time_zone_attribute_name.kind_of?(Hash)
-      :time_zone
-    else
-      time_zone_attribute_name
-    end
-  end
-
-  def _evaluate_time_jawn_date_time_attributes(time_zone_attribute_name, options_hash)
-    if options_hash.fetch(:time_attributes, false)
-      @time_jawn_date_time_attributes = options_hash.fetch(:time_attributes, nil)
-    elsif time_zone_attribute_name.kind_of?(Hash)
-      @time_jawn_date_time_attributes = time_zone_attribute_name.fetch(:time_attributes, nil)
-    else
-      @time_jawn_date_time_attributes = nil
-    end
+  def _set_instance_variables(options_hash)
+    @time_zone_attribute_name = options_hash.fetch(:named, :time_zone)
+    @time_jawn_date_time_attributes = options_hash.fetch(:time_attributes, nil)
   end
 
   # generates an instance method called "local_#{attribute}" that calls the _to_local instance method.
