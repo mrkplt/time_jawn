@@ -1,3 +1,10 @@
+PATH
+  remote: .
+  specs:
+    time_jawn (1.2.0)
+      activerecord (>= 3.2)
+      activesupport (>= 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -22,7 +29,7 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
-    arel (3.0.2)
+    arel (3.0.3)
     builder (3.0.4)
     diff-lcs (1.2.4)
     erubis (2.7.0)
@@ -70,14 +77,13 @@ GEM
     thor (0.18.1)
     tilt (1.4.1)
     timecop (0.6.3)
-    tzinfo (0.3.37)
+    tzinfo (0.3.39)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (~> 3.2.0)
-  activesupport (~> 3.2.0)
   rspec-rails
   sqlite3-ruby
+  time_jawn!
   timecop

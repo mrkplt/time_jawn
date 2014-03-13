@@ -9,7 +9,7 @@ describe Happening do
   context 'class method' do
     describe "datetime_attributes" do
       it "returns an array of all datetime objects for the class" do
-        expect(Happening._datetime_attributes).to eq [:start_time, :created_at, :updated_at] 
+        expect(Happening._datetime_attributes).to eq [:start_time, :created_at, :updated_at]
       end
     end
     describe "has_time_zone" do
@@ -22,9 +22,9 @@ describe Happening do
         expect(Happening.instance_methods.include? :local_updated_at=).to eq false
       end
       it "has instance methods once called " do
-        
+
         Happening.has_time_zone
-        
+
         expect(Happening.instance_methods.include? :local_start_time).to eq true
         expect(Happening.instance_methods.include? :local_created_at).to eq true
         expect(Happening.instance_methods.include? :local_updated_at).to eq true
@@ -126,7 +126,7 @@ describe Happening do
     describe "local_start_time=(time_or_string)" do
       it "sets start_time on the instance to a time_with_zone object only modifying the time zone" do
         expect(@happening1.start_time).to eq 'Mon, 01 Apr 2013 00:01:00 UTC +00:00'
-        
+
         @happening1.local_start_time = Time.parse("Thu, 29 Aug 2013 02:40:12 HST -10:00")
         expect(@happening1.start_time).to eq Time.parse("2013-08-29 02:40:12 -0400")
 
@@ -148,7 +148,7 @@ describe Happening do
     describe "local_updated_at=(time_or_string)" do
       it "sets updated_at on the instance to a time_with_zone object only modifying the time zone" do
         expect(@happening1.updated_at).to eq 'Tue, 01 Jan 2013 00:01:00 +0000'
-        
+
         @happening1.local_updated_at = Time.parse("Thu, 29 Aug 2013 02:40:12 HST -10:00")
         expect(@happening1.updated_at).to eq Time.parse("2013-08-29 02:40:12 -0400")
 
@@ -170,7 +170,7 @@ describe Happening do
     describe "local_created_at=(time_or_string)" do
       it "sets created_at on the instance to a time_with_zone object only modifying the time zone" do
         expect(@happening1.created_at).to eq ' Tue, 01 Jan 2013 00:01:00 +0000'
-        
+
         @happening1.local_created_at = Time.parse("Thu, 29 Aug 2013 02:40:12 HST -10:00")
         expect(@happening1.created_at).to eq Time.parse("2013-08-29 02:40:12 -0400")
 
@@ -215,7 +215,7 @@ describe Occurrence do
   before do
     @occurrence1 = Occurrence.find_by_name('Eastern Time (US & Canada)')
   end
-  
+
   context "Ocurrence instance attribute accessor" do
     describe "time_zone_attribute_name" do
       it 'should respond with the time_zone attribute name as defined in the class.' do

@@ -60,7 +60,7 @@ instance_of_class.local_created_at
 instance_of_class.local_updated_at
 # Mon, 30 Sep 2013 10:02:41 MST -07:00
 
-instance_of_class.current_time 
+instance_of_class.current_time
 # Mon, 30 Sep 2013 10:04:01 MST -07:00
 
 instance_of_class.local_updated_at = DateTime.now
@@ -95,7 +95,7 @@ Gem:
  - http://ryanbigg.com/2011/01/extending-active-record/
  - http://danieltsadok.wordpress.com/2010/04/06/understanding-rails-plugins/
  - http://blog.firsthand.ca/2010/09/ruby-rdoc-example.html
- 
+
 Other:
 
 - http://rubymonk.com/learning/books/2-metaprogramming-ruby/chapters/25-dynamic-methods/lessons/72-define-method
