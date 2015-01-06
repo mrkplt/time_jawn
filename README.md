@@ -26,7 +26,7 @@ has_time_zone
 If you already have a time zone attribute on your class, but it is not named time_zone you can specify it's name.
 
 ```
-has_time_zone :my_whacky_time_zone
+has_time_zone named: :my_whacky_time_zone
 ```
 
 If you would like to specify specific date_time attributes that you would like affected you can do so like this.
@@ -38,7 +38,7 @@ has_time_zone   time_attributes: [:created_at, :start_time]
 Finally, you can also specify a time zone attribute and control the affected attributes.
 
 ```
-has_time_zone     :my_whacky_time_zone,
+has_time_zone     named: :my_whacky_time_zone,
                   time_attributes: [:created_at, :start_time]
 ```
 
