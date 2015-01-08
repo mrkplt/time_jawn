@@ -24,8 +24,8 @@ module TimeJawn
     #       has_time_zone   named: :this_is_my_time_zone
     #     end
     def has_time_zone(options_hash={})
-      _set_instance_variables(options_hash)
-      send :include, InstanceMethods
+      set_instance_variables(options_hash)
+      send(:include, InstanceMethods)
     end
   end
 
@@ -64,35 +64,35 @@ module TimeJawn
     #
     # You can see examples of how these methods work in the specs folder.
     def self.included(base)
-      date_time_attributes = base.send(:_class_date_attributes_or_arguments)
+      date_time_attributes = base.send(:class_date_attributes_or_arguments)
       date_time_attributes.each do |attribute|
-        base.send(:_generate_to_local, attribute)
-        base.send(:_generate_to_local_with_assignment, attribute)
+        base.send(:generate_to_local, attribute)
+        base.send(:generate_to_local_with_assignment, attribute)
       end
     end
 
     # Returns the current time according to the instance.
     def current_time
-      _to_local(DateTime.current)
+      to_local(DateTime.current)
     end
 
     private
 
     # converts a time object into it's local counter part (they will have the same value but differnt presentation.)
-    def _to_local(time)
+    def to_local(time)
       time.in_time_zone(self.send(self.class.time_zone_attribute_name))
     end
 
     # Given a string that looks like a time. It will convert that string into a time object that matches the time but with
     # the instances time zone appended.
-    def _add_zone(time_string)
+    def add_zone(time_string)
       Time.zone = self.send(self.class.time_zone_attribute_name)
       Time.zone.parse(Time.parse(time_string).strftime(DATE_FORMAT))
     end
 
     # Returns a string representation of a time object suitable for consumption by add_zone.
-    def _change_zone(time)
-      _add_zone(time.strftime(DATE_FORMAT))
+    def change_zone(time)
+      add_zone(time.strftime(DATE_FORMAT))
     end
   end
 end
