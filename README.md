@@ -1,9 +1,11 @@
-TimeJawn
+TimeJawn v2.0.0
 ========
 [![Code Climate](https://codeclimate.com/github/Tamman/time_jawn.png)](https://codeclimate.com/github/Tamman/time_jawn)
 
 
 TimeJawn makes class instances time zone aware. It doesn't care one iota about system, application or database time.
+
+**Rails 4.2 has a bug that keeps TimeJawn from working correctly, but tests are passing on 4.1**
 
 Usage
 --------------
@@ -102,4 +104,4 @@ Other:
 
 License
 -------
-TimeJawn is Copyright © 2014 Mark Platt and Tamman Technologies, Inc. It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.
+TimeJawn is Copyright © 2015 Mark Platt and Tamman Technologies, Inc. It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.
