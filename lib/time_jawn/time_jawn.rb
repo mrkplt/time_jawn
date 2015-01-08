@@ -70,27 +70,28 @@ module TimeJawn
         base.send(:_generate_to_local_with_assignment, attribute)
       end
     end
+
     # Returns the current time according to the instance.
     def current_time
       _to_local(DateTime.current)
     end
+
+    private
+
     # converts a time object into it's local counter part (they will have the same value but differnt presentation.)
     def _to_local(time)
-      ActiveSupport::Deprecation.warn "_to_local will be made private in a future version."
       time.in_time_zone(self.send(self.class.time_zone_attribute_name))
     end
 
     # Given a string that looks like a time. It will convert that string into a time object that matches the time but with
     # the instances time zone appended.
     def _add_zone(time_string)
-      ActiveSupport::Deprecation.warn "_add_zone will be made private in a future version."
       Time.zone = self.send(self.class.time_zone_attribute_name)
       Time.zone.parse(Time.parse(time_string).strftime(DATE_FORMAT))
     end
 
     # Returns a string representation of a time object suitable for consumption by add_zone.
     def _change_zone(time)
-      ActiveSupport::Deprecation.warn "_change_zone will be made private in a future version."
       _add_zone(time.strftime(DATE_FORMAT))
     end
   end

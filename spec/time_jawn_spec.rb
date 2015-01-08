@@ -2,16 +2,27 @@ require 'spec_helper'
 
 describe Happening do
   before(:each){
-      @happening1 = Happening.find_by_name('Eastern Time (US & Canada)')
-      @happening2 = Happening.find_by_name('Pacific/Honolulu')
-      Time.zone = 'UTC'
+    @happening1 =
+      Happening.new(
+        start_time: DateTime.new+6725.years+3.months+1.minute,
+        time_zone: 'Eastern Time (US & Canada)',
+        name:'Eastern Time (US & Canada)',
+        updated_at: DateTime.new+6725.years+1.minute,
+        created_at: DateTime.new+6725.years+1.minute
+      )
+
+    @happening2 =
+      Happening.new(
+        start_time: DateTime.new+6725.years+3.months,
+        time_zone: 'Pacific/Honolulu', name:'Pacific/Honolulu',
+        updated_at: DateTime.new+6725.years,
+        created_at: DateTime.new+6725.years
+      )
+
+    Time.zone = 'UTC'
   }
+
   context 'class method' do
-    describe "datetime_attributes" do
-      it "returns an array of all datetime objects for the class" do
-        expect(Happening._datetime_attributes).to eq [:start_time, :created_at, :updated_at]
-      end
-    end
     describe "has_time_zone" do
       it "does not have instance methods until called" do
         expect(Happening.instance_methods.include? :local_start_time).to eq false
@@ -34,12 +45,8 @@ describe Happening do
       end
     end
   end
+
   context 'static instance methods' do
-
-    describe "self.included(base)" do
-      pending "How do you test this? I suppose if the dynamic tests exist this worked. Seems shoddy."
-    end
-
     describe "current_time" do
       it "returns a time with zone object reflecting the current local time of the instance" do
         Timecop.freeze
@@ -47,39 +54,8 @@ describe Happening do
         Timecop.return
       end
     end
-
-    describe "_to_local(time)" do
-      it "returns a time with zone that has been coverted to reflect the local time" do
-        expect(@happening1.start_time).to eq 'Mon, 01 Apr 2013 00:01:00 UTC +00:00'
-        expect(@happening1._to_local(@happening1.start_time)).to eq 'Sun, 31 Mar 2013 20:01:00 EDT -04:00'
-        expect(@happening1._to_local(@happening1.start_time).to_s).to eq "2013-03-31 20:01:00 -0400"
-      end
-    end
-
-    describe "_add_zone(time_string)" do
-      it "returns a time with zone object that reflects the time value passed in time_string with time zone information of instance appended" do
-        expect(@happening1._add_zone("2013-08-19 12:34:56")).to eq 'Mon, 19 Aug 2013 12:34:56 EDT -04:00'
-        expect(@happening2._add_zone("2013-08-19 12:34:56")).to eq 'Mon, 19 Aug 2013 12:34:56 HST -10:00'
-        expect(@happening1._add_zone("2013-11-11 12:34:56")).to eq 'Mon, 11 Nov 2013 12:34:56 EST -05:00'
-        expect(@happening2._add_zone("2013-11-11 12:34:56")).to eq 'Mon, 11 Nov 2013 12:34:56 HST -10:00'
-      end
-    end
-
-    describe "_change_zone(time)" do
-      it "returns a time with zone object that has had only it's time zone switched to local time of instance" do
-        Time.zone = 'Rangoon'
-        time = Time.zone.parse("Wed, 28 Aug 2015 15:16:16")
-        expect(time.to_s.split(' ')[2]).to eq ('+0630')
-        expect(time.to_s.split(' ')[2]).to_not eq ('-0400')
-        expect(@happening1._change_zone(time)).to_not eq time
-        expect(@happening1._change_zone(time).to_s.split(' ')[0]).to eq time.to_s.split(' ')[0]
-        expect(@happening1._change_zone(time).to_s.split(' ')[1]).to eq time.to_s.split(' ')[1]
-        expect(@happening1._change_zone(time).to_s.split(' ')[2]).to_not eq time.to_s.split(' ')[2]
-        expect(@happening1._change_zone(time).to_s.split(' ')[2]).to_not eq ('+0630')
-        expect(@happening1._change_zone(time).to_s.split(' ')[2]).to eq ('-0400')
-      end
-    end
   end
+
   context 'dynamic instance methods' do
     describe "local_start_time" do
       it "returns a time with zone object that reflects the value of start_time altered to the instance's time zone" do
@@ -185,7 +161,6 @@ describe Happening do
 
         @happening1.local_created_at = "2013-11-11 12:34:56"
         expect(@happening1.created_at).to eq Time.parse("2013-11-11 12:34:56 -0500")
-
       end
     end
   end
@@ -195,6 +170,7 @@ describe Event do
   before do
     @event1 = Event.find_by_name('Eastern Time (US & Canada)')
   end
+
   context "Event should have time_jawn methods even though it has a non_conventional attribute" do
     subject { @event1 }
 
@@ -205,9 +181,6 @@ describe Event do
     it { should respond_to :local_created_at= }
     it { should respond_to :local_updated_at= }
     it { should respond_to :current_time }
-    it { should respond_to :_to_local }
-    it { should respond_to :_add_zone }
-    it { should respond_to :_change_zone }
   end
 end
 
@@ -234,9 +207,6 @@ describe Occurrence do
     it { should respond_to :local_created_at= }
     it { should_not respond_to :local_updated_at= }
     it { should respond_to :current_time }
-    it { should respond_to :_to_local }
-    it { should respond_to :_add_zone }
-    it { should respond_to :_change_zone }
   end
 end
 
@@ -263,8 +233,5 @@ describe Occasion do
     it { should_not respond_to :local_created_at= }
     it { should_not respond_to :local_updated_at= }
     it { should respond_to :current_time }
-    it { should respond_to :_to_local }
-    it { should respond_to :_add_zone }
-    it { should respond_to :_change_zone }
   end
 end

@@ -1,18 +1,15 @@
 # Defines private methods necessary for TimeJawn to work.
 module TimeJawnPrivateClassMethods
-  # Locates all of an ActiveRecord class' DateTime Attributes and returns them as an array of symbols.
-  def _datetime_attributes
-    ActiveSupport::Deprecation.warn "_datetime_attributes will be made private in a future version."
-    klass = name.constantize
-
-    datetime_attributes = []
-    klass.columns.each do |column|
-       datetime_attributes << column.name.to_sym if column.type == :datetime
-    end
-    datetime_attributes
-  end
 
   private
+
+  # Locates all of an ActiveRecord class' DateTime Attributes and returns them as an array of symbols.
+  def _datetime_attributes
+    name.constantize.columns.map do |column|
+       next unless column.type == :datetime
+       column.name.to_sym
+    end.compact
+  end
 
   def _set_instance_variables(options_hash)
     @time_zone_attribute_name = options_hash.fetch(:named, :time_zone)
