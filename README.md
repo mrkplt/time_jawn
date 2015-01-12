@@ -1,6 +1,6 @@
 TimeJawn v2.0.0
 ========
-[![Code Climate](https://codeclimate.com/github/Tamman/time_jawn.png)](https://codeclimate.com/github/Tamman/time_jawn)
+[![Code Climate](https://codeclimate.com/github/mrkplt/time_jawn/badges/gpa.svg)](https://codeclimate.com/github/mrkplt/time_jawn)
 
 
 TimeJawn makes class instances time zone aware. It doesn't care one iota about system, application or database time.
