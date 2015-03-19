@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.description = %q{TimeJawn makes class instances time zone aware. It doesn't care one iota about system, application or database time as far as I can tell. It has some expectations and adds some useful methods.}
   s.summary = %q{TimeJawn makes time zone aware class instances.}
   s.license = 'MIT'
-  s.required_ruby_version = '>= 2.1'
+  s.required_ruby_version = '>= 2.0'
   s.test_files = 'spec/time_jawn_spec.rb'
   s.files = [
     "lib/time_jawn.rb",

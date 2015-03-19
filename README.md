@@ -5,8 +5,6 @@ TimeJawn v2.0.0
 
 TimeJawn makes class instances time zone aware. It doesn't care one iota about system, application or database time.
 
-**Rails 4.2 has a bug that keeps TimeJawn from working correctly, but tests are passing on 4.1**
-
 Usage
 --------------
 ```
