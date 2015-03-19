@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   ]
   s.homepage    = 'https://github.com/mrkplt/time_jawn'
   s.require_paths = ["lib"]
-  s.add_runtime_dependency "activerecord", ["= 4.1"]
-  s.add_runtime_dependency "activesupport", ["= 4.1"]
+  s.add_runtime_dependency "activerecord", ["= 4.2.1"]
+  s.add_runtime_dependency "activesupport", ["= 4.2.1"]
 
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "sqlite3-ruby"
