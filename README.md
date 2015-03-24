@@ -42,7 +42,7 @@ has_time_zone     named: :my_whacky_time_zone,
                   time_attributes: [:created_at, :start_time]
 ```
 
-At this point when you create a new instance of that model you will get two methods for each datetime attribue. One that will convert the time stored in the database into the local time of the instance, and one that will convert any time presented to it into a localized version of that time (which is to say, any time zone info will be stripped off, and the objects time zone will be appended). That can be confusing so here are some examples (that we are going to assume have a time zone attribute already):
+At this point when you create a new instance of that model you will get two methods for each datetime attribute. One that will convert the time stored in the database into the local time of the instance, and one that will convert any time presented to it into a localized version of that time (which is to say, any time zone info will be stripped off, and the objects time zone will be appended). That can be confusing so here are some examples (that we are going to assume have a time zone attribute already):
 
 ```
 class GenericClass < ActiveRecord::Base
