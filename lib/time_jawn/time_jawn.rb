@@ -38,7 +38,7 @@ module TimeJawn
     # This method generates a series of methods on instances by calling the
     # enerate_to_local and generate_to_local_with_assignment that are private on
     # the parent class. The methods that are created are called
-    # local_#{attribue} and local_#{attribute}= the attribute portion their
+    # local_#{attribute} and local_#{attribute}= the attribute portion their
     # names are completed by enumerating the datetime_attributes of the class.
     # Twice as many methods as there are DateTime attributes will be created.
     #
@@ -49,7 +49,7 @@ module TimeJawn
     #     local_created_at=
     #     local_updated_at=
     #
-    # The local_#{attribue} methods will take the value stored in the attribute
+    # The local_#{attribute} methods will take the value stored in the attribute
     # indicated by the methods name and apply a time zone conversion to it. This
     #  is useful for displaying the local time (according to the object).
     #
