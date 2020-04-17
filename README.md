@@ -102,4 +102,4 @@ Other:
 
 License
 -------
-TimeJawn is Copyright © 2015 Mark Platt and Tamman Technologies, Inc. It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.
+TimeJawn is Copyright © 2020 Mark Platt and Tamman Technologies, Inc. It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.
