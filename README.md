@@ -1,4 +1,4 @@
-TimeJawn v2.0.2
+TimeJawn v3.0.0
 ========
 [![Code Climate](https://codeclimate.com/github/mrkplt/time_jawn/badges/gpa.svg)](https://codeclimate.com/github/mrkplt/time_jawn)
 

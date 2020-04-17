@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    time_jawn (2.0.2)
+    time_jawn (3.0.0)
       activerecord (~> 6)
       activesupport (~> 6)
 
