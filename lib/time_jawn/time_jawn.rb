@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The base module of the TimeJawn gem. Everything in here assumes that your
 # model has a valid time zone in a attribute name time_zone or has been
 # delegating one to somewhere else.
@@ -26,13 +28,13 @@ module TimeJawn
     #     class Event<ActiveRecord::Base
     #       has_time_zone   named: :this_is_my_time_zone
     #     end
-    def has_time_zone(options_hash={})
+    def has_time_zone(options_hash = {})
       set_instance_variables(options_hash)
       send(:include, InstanceMethods)
     end
   end
 
-  #Defines methods that will be added to instances of classes that have
+  # Defines methods that will be added to instances of classes that have
   # previously called has_time_zone.
   module InstanceMethods
     # This method generates a series of methods on instances by calling the
@@ -93,14 +95,14 @@ module TimeJawn
     # converts a time object into it's local counter part (they will have the
     # same value but differnt presentation.)
     def to_local(time)
-      time.in_time_zone(self.send(self.class.time_zone_attribute_name))
+      time.in_time_zone(send(self.class.time_zone_attribute_name))
     end
 
     # Given a string that looks like a time. It will convert that string into a
     # time object that matches the time but with the instances time zone
     # appended.
     def add_zone(time_string)
-      Time.zone = self.send(self.class.time_zone_attribute_name)
+      Time.zone = send(self.class.time_zone_attribute_name)
       Time.zone.parse(Time.parse(time_string).strftime(DATE_FORMAT))
     end
 

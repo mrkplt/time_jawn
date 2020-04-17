@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'time_jawn/time_jawn'
 
-ActiveRecord::Base.send(:include, TimeJawn)
+ActiveRecord::Base.include TimeJawn

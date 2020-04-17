@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 # Defines private methods necessary for TimeJawn to work.
 module TimeJawnPrivateClassMethods
-
   private
 
   # Locates all of an ActiveRecord class' DateTime Attributes and returns them
   # as an array of symbols.
   def datetime_attributes
     name.constantize.columns.map do |column|
-       next unless column.type == :datetime
-       column.name.to_sym
+      next unless column.type == :datetime
+
+      column.name.to_sym
     end.compact
   end
 

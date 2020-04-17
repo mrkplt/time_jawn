@@ -1,0 +1,19 @@
+Style/Encoding:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/support/schema.rb
+    - spec/time_jawn_spec.rb
+Naming/PredicateName:
+  Exclude:
+    - lib/time_jawn/time_jawn.rb
+Naming/AccessorMethodName:
+  Exclude:
+    - lib/time_jawn/time_jawn_private_class_methods.rb
+Layout/LineLength:
+  Exclude:
+    - spec/time_jawn_spec.rb
+    - time_jawn.gemspec
+Gemspec/RequiredRubyVersion:
+  Enabled: false
