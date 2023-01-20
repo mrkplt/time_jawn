@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/mrkplt/time_jawn'
   s.require_paths = ['lib']
   s.add_runtime_dependency 'activerecord', ['~> 6']
-  s.add_runtime_dependency 'activesupport', ['~> 6']
+  s.add_runtime_dependency 'activesupport', '>= 6', '< 8'
 
   s.add_development_dependency 'rspec', ['~> 3.9']
   s.add_development_dependency 'rubocop', ['~> 0.82']
